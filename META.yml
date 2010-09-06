@@ -1,6 +1,6 @@
 ---
 name: PerlIO-Layers
-version: 0.003
+version: 0.004
 author:
   - 'Leon Timmermans <leont@cpan.org>'
 abstract: Querying your filehandle's capabilities
@@ -20,7 +20,7 @@ configure_requires:
 provides:
   PerlIO::Layers:
     file: lib/PerlIO/Layers.pm
-    version: 0.003
+    version: 0.004
 generated_by: Module::Build version 0.340201
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
