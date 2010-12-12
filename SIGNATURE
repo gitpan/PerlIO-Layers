@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.61.
+signed via the Module::Signature module, version 0.63.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,22 +15,22 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 05582ae1368ed1b89717df95cf7418e28dae34eb Build.PL
-SHA1 cfa7023ba1a9286aa42b1166572896701eb6a702 Changes
+SHA1 555abc22e0b0500dd3200d2dcb54f8cd528a3677 Changes
 SHA1 9e627682091372eabbb50d3af3404656d87eb080 LICENSE
 SHA1 a24cfd31e9b8cdf3b3b115cb0549edc80864e32d MANIFEST
-SHA1 1ea0fbbea12a4a62c4d12dabcaea0dc415f19135 META.yml
-SHA1 b2616b5bb178cdeefae4e3abb0ce65af36857571 Makefile.PL
+SHA1 b8cc5db563f007af88d9cb71607066df5bf3a0ab META.yml
+SHA1 4cfedd61a7cd052580d4e2fb2115362978303a4b Makefile.PL
 SHA1 2da08e60ddd0e9ffc5b471a5ca175566bb0740ad README
-SHA1 2966c42aa24b710cc0018609ddf23aeea174d65e lib/PerlIO/Layers.pm
+SHA1 cbe7abafe1e5af2e5a909dccad0cdd57cf29b744 lib/PerlIO/Layers.pm
 SHA1 f273fa23a7c9dda36c17a88c98feee791d647c42 lib/PerlIO/Layers.xs
 SHA1 e5d2e931339d6a25a54c14ee526eee421c3ca930 t/00-load.t
-SHA1 04f91bd9b284fec1eeade8bd8800d6fe2dde16ce t/10-basics.t
+SHA1 13b1a358294009229d10ad6132c46b2b407e549f t/10-basics.t
 SHA1 0b1c5a2d59be6bfa7d60c64cd964fea6a0331705 t/pod-coverage.t
 SHA1 640935336dc1123c0069bcf5432bcaedc2cf22d3 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAkyH5w8ACgkQTd+EWiaICwok8QCgwpHr5da5ygic6K//rA/ReVcN
-8LkAmwVPVkSM87NThaFiaw2Rw8dlbqD8
-=7Tp2
+iEYEARECAAYFAk0FW3QACgkQTd+EWiaICwr3aACgvKpNY4ocMRtTrfd1lxqfSaNz
+hk4AoKutJ3w9v7arjXTQRlqET3GxPW6m
+=b9ab
 -----END PGP SIGNATURE-----

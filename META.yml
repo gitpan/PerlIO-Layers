@@ -1,27 +1,27 @@
 ---
-name: PerlIO-Layers
-version: 0.005
+abstract: "Querying your filehandle's capabilities"
 author:
   - 'Leon Timmermans <leont@cpan.org>'
-abstract: Querying your filehandle's capabilities
-license: perl
-resources:
-  license: http://dev.perl.org/licenses/
 build_requires:
   ExtUtils::CBuilder: 0
   Module::Build: 0
   Test::More: 0
+configure_requires:
+  Module::Build: 0
+generated_by: 'Module::Build version 0.3607'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: PerlIO-Layers
+provides:
+  PerlIO::Layers:
+    file: lib/PerlIO/Layers.pm
+    version: 0.006
 requires:
   Exporter: 5.57
   List::MoreUtils: 0
   perl: 5.008
-configure_requires:
-  Module::Build: 0
-provides:
-  PerlIO::Layers:
-    file: lib/PerlIO/Layers.pm
-    version: 0.005
-generated_by: Module::Build version 0.340201
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.006
