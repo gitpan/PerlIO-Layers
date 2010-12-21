@@ -5,7 +5,7 @@ author:
 build_requires:
   ExtUtils::CBuilder: 0
   Module::Build: 0
-  Test::More: 0
+  Test::More: 0.82
 configure_requires:
   Module::Build: 0
 generated_by: 'Module::Build version 0.3607'
@@ -17,11 +17,11 @@ name: PerlIO-Layers
 provides:
   PerlIO::Layers:
     file: lib/PerlIO/Layers.pm
-    version: 0.006
+    version: 0.007
 requires:
   Exporter: 5.57
   List::MoreUtils: 0
   perl: 5.008
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.006
+version: 0.007
