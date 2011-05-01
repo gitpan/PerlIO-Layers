@@ -1,14 +1,17 @@
 Build.PL
 Changes
-lib/PerlIO/Layers.pm
-lib/PerlIO/Layers.xs
 LICENSE
-Makefile.PL
 MANIFEST
+META.json
 META.yml
 README
+SIGNATURE
+dist.ini
+lib/PerlIO/Layers.pm
+lib/PerlIO/Layers.xs
+t/00-compile.t
 t/00-load.t
 t/10-basics.t
-t/pod-coverage.t
-t/pod.t
-SIGNATURE    Added here by Module::Build
+t/release-kwalitee.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t

@@ -1,14 +1,20 @@
-This software is copyright (c) 2010 by Leon Timmermans <leont@cpan.org>.
+This software is copyright (c) 2010 by Leon Timmermans.
 
 This is free software; you can redistribute it and/or modify it under
-the same terms as perl itself:
+the same terms as the Perl 5 programming language system itself.
 
-a) The GNU General Public License as published by the Free
+Terms of the Perl programming language system itself
+
+a) the GNU General Public License as published by the Free
    Software Foundation; either version 1, or (at your option) any
    later version, or
-b) The "Artistic License"
+b) the "Artistic License"
 
 --- The GNU General Public License, Version 1, February 1989 ---
+
+This software is Copyright (c) 2010 by Leon Timmermans.
+
+This is free software, licensed under:
 
   The GNU General Public License, Version 1, February 1989
 
@@ -264,6 +270,12 @@ That's all there is to it!
 
 --- The Artistic License 1.0 ---
 
+This software is Copyright (c) 2010 by Leon Timmermans.
+
+This is free software, licensed under:
+
+  The Artistic License 1.0
+
 The Artistic License
 
 Preamble
@@ -362,3 +374,4 @@ WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
 MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 The End
+

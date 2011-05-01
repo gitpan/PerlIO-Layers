@@ -1,4 +1,15 @@
+#
+# This file is part of PerlIO-Layers
+#
+# This software is copyright (c) 2010 by Leon Timmermans.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 package PerlIO::Layers;
+BEGIN {
+  $PerlIO::Layers::VERSION = '0.008';
+}
 
 use 5.008;
 use strict;
@@ -12,9 +23,7 @@ use Exporter 5.57 qw/import/;
 
 our @EXPORT_OK = qw/query_handle get_layers/;
 
-our $VERSION = '0.007';
-
-XSLoader::load(__PACKAGE__, $VERSION);
+XSLoader::load(__PACKAGE__, __PACKAGE__->VERSION);
 
 our %FLAG_FOR;
 sub _names_to_flags {
@@ -116,15 +125,17 @@ sub get_layers {
 
 1;    # End of PerlIO::Layers
 
-__END__
+
+
+=pod
 
 =head1 NAME
 
-PerlIO::Layers - Querying your filehandle's capabilities
+PerlIO::Layers
 
 =head1 VERSION
 
-Version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 
@@ -137,6 +148,14 @@ Version 0.007
 =head1 DESCRIPTION
 
 Perl's filehandles are implemented as a stack of layers, with the bottom-most usually doing the actual IO and the higher ones doing buffering, encoding/decoding or transformations. PerlIO::Layers allows you to query the filehandle's properties concerning there layers.
+
+=head1 NAME
+
+PerlIO::Layers - Querying your filehandle's capabilities
+
+=head1 VERSION
+
+Version 0.007
 
 =head1 SUBROUTINES
 
@@ -246,5 +265,20 @@ by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
 
+=head1 AUTHOR
+
+Leon Timmermans <fawaka@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Leon Timmermans.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
 =cut
+
+
+__END__
+
 

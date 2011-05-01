@@ -1,8 +1,16 @@
 #!perl
+#
+# This file is part of PerlIO-Layers
+#
+# This software is copyright (c) 2010 by Leon Timmermans.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 
 use strict;
 use warnings FATAL => 'all';
-use Test::More;
+use Test::More 0.82;
 use Data::Dumper;
 
 use PerlIO::Layers qw/query_handle get_layers/;
@@ -20,7 +28,7 @@ is(query_handle(\*STDOUT, 'buffered'),  1, 'stdout is buffered');
 
 is(query_handle(\*STDERR, 'readable'),  0, 'stderr is readable');
 is(query_handle(\*STDERR, 'writeable'), 1, 'stderr is not writable');
-is(query_handle(\*STDOUT, 'buffered'),  1, 'stdout is buffered');
+is(query_handle(\*STDERR, 'buffered'),  1, 'stderr is buffered');
 
 my $is_win32 = int($^O eq 'MSWin32');
 my $not_win32 = int !$is_win32;
@@ -30,10 +38,13 @@ is(query_handle(\*STDIN, 'crlf'), $is_win32, 'crlf is only true on Windows');
 my @types = (
 	['<', utf8 => 0, binary => $not_win32, mappable => $not_win32, crlf => $is_win32, buffered => 1, can_crlf => { unix => 0, crlf => $is_win32 }],
 	['<:bytes', layer => { crlf => $is_win32 }, utf8 => 0, binary => $not_win32, mappable => $not_win32, crlf => $is_win32, can_crlf => $is_win32, buffered => 1],
-	['<:raw', layer => { unix => 1 }, utf8 => 0, binary => 1, mappable => 1, crlf => 0, can_crlf => 0],
+	['<:raw', layer => { unix => 1 }, utf8 => 0, binary => 1, mappable => 1, crlf => 0],
 	['<:raw:perlio', layer => { unix => 1, perlio => 1 }, utf8 => 0, binary => 1, mappable => 1, crlf => 0, can_crlf => 0, buffered => 1 ],
 	['<:utf8', layer => { utf8 => 0 }, utf8 => 1, binary => 0, mappable => $not_win32, crlf => $is_win32],
 	['<:raw:utf8', layer => { unix => 1 }, utf8 => 1, binary => 0, mappable => 1, crlf => 0],
+	['<:encoding(utf8)', layer => { encoding => 1 }, utf8 => 1, binary => 0, mappable => 0, crlf => $is_win32],
+	['<:encoding(utf-8)', layer => { encoding => 1 }, utf8 => 1, binary => 0, mappable => 0, crlf => $is_win32],
+	['<:encoding(UTF-8)', layer => { encoding => 1 }, utf8 => 1, binary => 0, mappable => 0, crlf => $is_win32],
 	['<:encoding(latin1)', layer => { encoding => 1 }, utf8 => 1, binary => 0, mappable => 0, crlf => $is_win32],
 	['<:crlf', layer => { crlf => 1 }, utf8 => 0, binary => 0, mappable => 0, crlf => 1],
 	['<:pop', layer => { perlio => 0, crlf => 0, stdio => 0 }, buffered => 0, can_crlf => 0]

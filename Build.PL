@@ -1,29 +1,45 @@
-use 5.008;
+
 use strict;
 use warnings;
-use Module::Build;
 
-my $builder = Module::Build->new(
-    module_name         => 'PerlIO::Layers',
-    license             => 'perl',
-    dist_author         => q{Leon Timmermans <leont@cpan.org>},
-    dist_version_from   => 'lib/PerlIO/Layers.pm',
-	configure_requires => {
-		'Module::Build' => 0,
-	},
-    build_requires => {
-		'ExtUtils::CBuilder' => 0,
-		'Module::Build'      => 0,
-        'Test::More'         => 0.82,
-    },
-	requires => {
-		perl               => 5.008,
-		Exporter           => 5.57,
-		'List::MoreUtils'  => 0,
-	},
-    add_to_cleanup      => [ 'PerlIO-Layers-*' ],
-    create_makefile_pl  => 'small',
-	sign                => 1,
+use Module::Build 0.28;
+
+
+my %module_build_args = (
+  'build_requires' => {
+    'Data::Dumper' => '0',
+    'ExtUtils::CBuilder' => '0',
+    'File::Find' => '0',
+    'File::Temp' => '0',
+    'Module::Build' => '0.28',
+    'Test::More' => '0.82'
+  },
+  'configure_requires' => {
+    'Module::Build' => '0.28'
+  },
+  'dist_abstract' => 'Querying your filehandle\'s capabilities',
+  'dist_author' => [
+    'Leon Timmermans <fawaka@gmail.com>'
+  ],
+  'dist_name' => 'PerlIO-Layers',
+  'dist_version' => '0.008',
+  'license' => 'perl',
+  'module_name' => 'PerlIO::Layers',
+  'recommends' => {},
+  'recursive_test_files' => 1,
+  'requires' => {
+    'Carp' => '0',
+    'Exporter' => '5.57',
+    'List::MoreUtils' => '0',
+    'List::Util' => '0',
+    'PerlIO' => '0',
+    'XSLoader' => '0',
+    'perl' => '5.008'
+  },
+  'script_files' => []
 );
 
-$builder->create_build_script();
+
+my $build = Module::Build->new(%module_build_args);
+
+$build->create_build_script;
