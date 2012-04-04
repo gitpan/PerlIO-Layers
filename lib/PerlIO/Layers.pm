@@ -1,27 +1,19 @@
-#
-# This file is part of PerlIO-Layers
-#
-# This software is copyright (c) 2010 by Leon Timmermans.
-#
-# This is free software; you can redistribute it and/or modify it under
-# the same terms as the Perl 5 programming language system itself.
-#
 package PerlIO::Layers;
-BEGIN {
-  $PerlIO::Layers::VERSION = '0.008';
+{
+  $PerlIO::Layers::VERSION = '0.009';
 }
 
-use 5.008;
+use 5.008_001;
 use strict;
 use warnings FATAL => 'all';
 use XSLoader;
 use PerlIO ();
 use Carp qw/croak/;
-use List::Util qw/reduce/;
+use List::Util qw/reduce max/;
 use List::MoreUtils qw/natatime/;
 use Exporter 5.57 qw/import/;
 
-our @EXPORT_OK = qw/query_handle get_layers/;
+our @EXPORT_OK = qw/query_handle get_layers get_buffer_sizes/;
 
 XSLoader::load(__PACKAGE__, __PACKAGE__->VERSION);
 
@@ -105,6 +97,12 @@ my %layer_query_for = (
 	},
 	buffered => _is_kind('BUFFERED'),
 	can_crlf => _is_kind('CANCRLF'),
+	line_buffered => _has_flags('LINEBUF'),
+	autoflush => _has_flags('UNBUF'),
+	buffer_size => sub {
+		my ($handle, $size) = @_;
+		return max(get_buffer_sizes($handle)) == $size;
+	}
 );
 
 sub query_handle {
@@ -125,17 +123,19 @@ sub get_layers {
 
 1;    # End of PerlIO::Layers
 
+# ABSTRACT: Querying your filehandle's capabilities
+
 
 
 =pod
 
 =head1 NAME
 
-PerlIO::Layers
+PerlIO::Layers - Querying your filehandle's capabilities
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 SYNOPSIS
 
@@ -147,19 +147,11 @@ version 0.008
 
 =head1 DESCRIPTION
 
-Perl's filehandles are implemented as a stack of layers, with the bottom-most usually doing the actual IO and the higher ones doing buffering, encoding/decoding or transformations. PerlIO::Layers allows you to query the filehandle's properties concerning there layers.
+Perl's filehandles are implemented as a stack of layers, with the bottom-most usually doing the actual IO and the higher ones doing buffering, encoding/decoding or transformations. PerlIO::Layers allows you to query the filehandle's properties concerning these layers.
 
-=head1 NAME
+=head1 FUNCTIONS
 
-PerlIO::Layers - Querying your filehandle's capabilities
-
-=head1 VERSION
-
-Version 0.007
-
-=head1 SUBROUTINES
-
-=head2 query_handle($fh, $query_name [, $layer])
+=head2 query_handle($fh, $query_name [, $argument])
 
 This query a filehandle for some information. All queries can take an optional argument, that will test for that layer's properties instead of all layers of the handle. Currently supported queries include:
 
@@ -167,7 +159,7 @@ This query a filehandle for some information. All queries can take an optional a
 
 =item * layer
 
-Check the presence of a certain layer. Unlike all other properties $layer is mandatory for this query.
+Check the presence of a certain layer. Unlike most other properties C<$argument> is mandatory for this query.
 
 =item * utf8
 
@@ -207,63 +199,29 @@ Check whether the filehandle/layer refers to a temporary file.
 
 =item * can_crlf
 
-Checks whether layer $argument (or any layer if $argument it not given) can do crlf translation.
+Checks whether layer C<$argument> (or any layer if C<$argument> it not given) can do crlf translation.
+
+=item * line_buffered
+
+Check whether the filehandle is in line-buffering mode.
+
+=item * autoflush
+
+Checks wheter the filehandle is in unbuffering mode. Note that this is not the opposite of buffering, but more similar to autoflush, hence the name of this test.
+
+=item * buffer_size
+
+Check whether the buffer size is equal to C<$argument>.
 
 =back
 
 =head2 get_layers($fh)
 
-Gets information on the layers of a filehandle. It's a list with whose entries have 3 elements: the name of the layer, the arguments of the layer (may be undef) and an arrayref with the flags of the layer as strings. The flags array can contain any of these values. You probably want to use query_layers instead.  query_handle provides a more high level interface to this, you should probably use that when you can.
+Gets information on the layers of a filehandle. It's a list with whose entries have 3 elements: the name of the layer, the arguments of the layer (may be undef) and an arrayref with the flags of the layer as strings. The flags array can contain any of these values. You probably want to use query_layers instead. C<query_handle> provides a more high level interface to this, you should probably use that when you can.
 
-This function is deprecated and will be removed in a future version of PerlIO::Layers.
+=head2 get_buffer_sizes($fh)
 
-=head1 AUTHOR
-
-Leon Timmermans, C<< <leont at cpan.org> >>
-
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-perlio-layers at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=PerlIO-Layers>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc PerlIO::Layers
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=PerlIO-Layers>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/PerlIO-Layers>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/PerlIO-Layers>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/PerlIO-Layers/>
-
-=back
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2010 Leon Timmermans.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
+Returns a list of buffer sizes for all buffered layers. Unbuffered layers are skipped.
 
 =head1 AUTHOR
 

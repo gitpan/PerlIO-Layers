@@ -1,19 +1,12 @@
 #!perl
-#
-# This file is part of PerlIO-Layers
-#
-# This software is copyright (c) 2010 by Leon Timmermans.
-#
-# This is free software; you can redistribute it and/or modify it under
-# the same terms as the Perl 5 programming language system itself.
-#
 
 use strict;
 use warnings FATAL => 'all';
 use Test::More 0.82;
 use Data::Dumper;
+use List::Util 'max';
 
-use PerlIO::Layers qw/query_handle get_layers/;
+use PerlIO::Layers qw/query_handle get_layers get_buffer_sizes/;
 
 my %flags = map { ($_ => 1) } map {  @{ $_->[2] } } get_layers(\*STDOUT);
 
@@ -36,10 +29,10 @@ my $not_win32 = int !$is_win32;
 is(query_handle(\*STDIN, 'crlf'), $is_win32, 'crlf is only true on Windows');
 
 my @types = (
-	['<', utf8 => 0, binary => $not_win32, mappable => $not_win32, crlf => $is_win32, buffered => 1, can_crlf => { unix => 0, crlf => $is_win32 }],
+	['<', utf8 => 0, binary => $not_win32, mappable => $not_win32, crlf => $is_win32, buffered => 1, can_crlf => { unix => 0, crlf => $is_win32 }, 'line_buffered' => 0 ],
 	['<:bytes', layer => { crlf => $is_win32 }, utf8 => 0, binary => $not_win32, mappable => $not_win32, crlf => $is_win32, can_crlf => $is_win32, buffered => 1],
 	['<:raw', layer => { unix => 1 }, utf8 => 0, binary => 1, mappable => 1, crlf => 0],
-	['<:raw:perlio', layer => { unix => 1, perlio => 1 }, utf8 => 0, binary => 1, mappable => 1, crlf => 0, can_crlf => 0, buffered => 1 ],
+	['<:raw:perlio', layer => { unix => 1, perlio => 1 }, utf8 => 0, binary => 1, mappable => 1, crlf => 0, buffered => 1 ],
 	['<:utf8', layer => { utf8 => 0 }, utf8 => 1, binary => 0, mappable => $not_win32, crlf => $is_win32],
 	['<:raw:utf8', layer => { unix => 1 }, utf8 => 1, binary => 0, mappable => 1, crlf => 0],
 	['<:encoding(utf8)', layer => { encoding => 1 }, utf8 => 1, binary => 0, mappable => 0, crlf => $is_win32],
@@ -52,6 +45,13 @@ my @types = (
 
 if ($^O ne 'MSWin32') {
 	push @types, ['<:mmap', 'layer' => { mmap => 1 }, utf8 => 0, binary => 1, mappable => 1, crlf => 0, buffered => 1, can_crlf => 0];
+}
+
+{
+	open my $fh, '<', $0 or die $!;
+	#scalar <$fh>;
+	my @sizes = get_buffer_sizes($fh);
+	ok(max(@sizes), 'non zero buffer size for handle') or diag('Sizes are: ', explain(\@sizes));
 }
 
 for my $type (@types) {
