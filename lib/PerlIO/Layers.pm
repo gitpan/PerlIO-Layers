@@ -1,6 +1,6 @@
 package PerlIO::Layers;
 {
-  $PerlIO::Layers::VERSION = '0.009';
+  $PerlIO::Layers::VERSION = '0.010';
 }
 
 use 5.008_001;
@@ -135,7 +135,7 @@ PerlIO::Layers - Querying your filehandle's capabilities
 
 =head1 VERSION
 
-version 0.009
+version 0.010
 
 =head1 SYNOPSIS
 

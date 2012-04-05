@@ -21,7 +21,7 @@ my %module_build_args = (
     "Leon Timmermans <fawaka\@gmail.com>"
   ],
   "dist_name" => "PerlIO-Layers",
-  "dist_version" => "0.009",
+  "dist_version" => "0.010",
   "license" => "perl",
   "module_name" => "PerlIO::Layers",
   "recommends" => {},
